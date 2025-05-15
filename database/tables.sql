@@ -87,3 +87,19 @@ CREATE TABLE Messages (
   Content TEXT NOT NULL,
   Timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE Notifications (
+    NotificationID SERIAL PRIMARY KEY,       -- Unique ID for each notification
+
+    ReceiverID INT NOT NULL,                 -- The user who will see the notification
+    MessageID INT NOT NULL,                  -- The message that triggered the notification
+
+    NotificationText TEXT NOT NULL,          -- Message to display in-app (e.g., "You got a new message")
+    IsRead BOOLEAN DEFAULT FALSE,            -- Has the user seen the notification?
+
+    CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- When it was generated
+
+    FOREIGN KEY (ReceiverID) REFERENCES Users(StudentID),
+    FOREIGN KEY (MessageID) REFERENCES Messages(MessageID)
+);
+
